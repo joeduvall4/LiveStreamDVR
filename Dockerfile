@@ -168,5 +168,5 @@ ENV TCD_PYTHON_ENABLE_PIPENV=1
 # USER node
 WORKDIR /usr/local/share/twitchautomator/server
 
-ENTRYPOINT [ "/usr/local/bin/start-tailscale.sh", "&&", "yarn", "run", "start" ]
+ENTRYPOINT [ "/usr/local/bin/start-tailscale.sh", ";", "yarn", "run", "start" ]
 EXPOSE 8080
