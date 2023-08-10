@@ -140,6 +140,18 @@ COPY ./docker/fonts /home/node/.fonts
 # get certs
 # RUN wget https://curl.haxx.se/ca/cacert.pem -O /tmp/cacert.pem
 
+# Tailscale support
+ENV TAILSCALE_ENABLE=false
+ENV TAILSCALE_AUTH_KEY=""
+ENV TAILSCALE_ENABLE_SSH=false
+
+COPY ./docker/tailscale/setup-tailscale.sh /usr/local/bin/setup-tailscale.sh
+RUN chmod +x /usr/local/bin/setup-tailscale.sh
+RUN /usr/local/bin/setup-tailscale.sh
+
+COPY ./docker/tailscale/start-tailscale.sh /usr/local/bin/start-tailscale.sh
+RUN chmod +x /usr/local/bin/start-tailscale.sh
+
 # twitchautomator docker specific configs
 ENV TCD_BIN_DIR=/usr/local/bin
 ENV TCD_FFMPEG_PATH=/usr/bin/ffmpeg
@@ -156,5 +168,5 @@ ENV TCD_PYTHON_ENABLE_PIPENV=1
 # USER node
 WORKDIR /usr/local/share/twitchautomator/server
 
-ENTRYPOINT [ "yarn", "run", "start" ]
+ENTRYPOINT [ "/usr/local/bin/start-tailscale.sh", "&&", "yarn", "run", "start" ]
 EXPOSE 8080

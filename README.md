@@ -15,6 +15,7 @@ A reverse proxy is a good way to get around this:
 - [Apache](https://httpd.apache.org/)
 - [Caddy](https://caddyserver.com/)
 - [Traefik](https://traefik.io/)
+- [Tailscale Funnel](https://tailscale.com/kb/1223/tailscale-funnel/) *(Docker-only; see configuration below)*
 
 etc. I have only tested this with Nginx and letsencrypt.
 
@@ -78,6 +79,19 @@ Hub: https://hub.docker.com/r/mrbrax/twitchautomator
 Run `docker-compose up --build -d` in the app directory. The `docker-compose.yml` file is required.
 
 If you want the public webapp to have a custom base folder, you must provide `BASE_URL` and `VITE_BASE_URL` in the environment variable settings.
+
+### Tailscale support
+You can use [Tailscale Funnel](https://tailscale.com/kb/1223/tailscale-funnel/) to allow incoming traffic from port 443. Note that Tailscale Funnel is in beta and must be enabled in your Tailscale account and your tailnet policy file. You also need to have HTTPS enabled for your Tailscale account.
+
+Once the environment variables below have been set and the container has been setup, your App URL will be something like https://livestreamdvr.tailnet-name.ts.net. 
+
+#### Tailscale configuration
+
+| Variable | Default | Description |
+| -------- | ------- | ----------- |
+| `TAILSCALE_ENABLE` | `false` | Set to true to enable Tailscale integration. |
+| `TAILSCALE_AUTH_KEY` | None | An auth key for your Tailscale account, created in your [account settings](https://login.tailscale.com/admin/settings/keys). **Required if `TAILSCALE_ENABLE` is true.** |
+| `TAILSCALE_ENABLE_SSH` | `false` | Set to true to enable SSH access via Tailscale. |
 
 ---
 
