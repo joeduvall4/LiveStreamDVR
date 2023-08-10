@@ -1,7 +1,11 @@
 #!/bin/bash
 
 if [ "$TAILSCALE_ENABLE" == "true" ]; then
-	curl -fsSL https://tailscale.com/install.sh | sh
+	curl -sSL https://tailscale.com/install.sh | sh
+	if [ $? -ne 0 ]; then
+		echo "Tailscale installation failed!"
+		exit 1
+	fi
 
 	# Start the Tailscale daemon
 	tailscaled --tun=userspace-networking &
