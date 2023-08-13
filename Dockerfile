@@ -147,8 +147,8 @@ ENV TAILSCALE_AUTH_KEY=""
 ENV TAILSCALE_ENABLE_SSH=false
 ENV TAILSCALE_HOSTNAME="LiveStreamDVR"
 
-RUN curl -fsSL https://pkgs.tailscale.com/stable/debian/$(lsb_release -c -s).gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg > /dev/null
-RUN curl -fsSL https://pkgs.tailscale.com/stable/debian/$(lsb_release -c -s).tailscale-keyring.list | tee /etc/apt/sources.list.d/tailscale.list
+RUN curl -fsSL https://pkgs.tailscale.com/stable/debian/bullseye.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg > /dev/null
+RUN curl -fsSL https://pkgs.tailscale.com/stable/debian/bullseye.tailscale-keyring.list | tee /etc/apt/sources.list.d/tailscale.list
 
 RUN apt-get update && apt-get install tailscale && apt-get clean
 
