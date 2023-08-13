@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y \
     ffmpeg mediainfo \
     python3 python3-pip python3-wheel libxml2-dev libxslt-dev python3-dev \
     bash git curl unzip rclone \
+    gnupg lsb-release \
     && apt-get clean
 
 # copy over pipenv files and install dependencies for python
@@ -144,6 +145,12 @@ COPY ./docker/fonts /home/node/.fonts
 ENV TAILSCALE_ENABLE=false
 ENV TAILSCALE_AUTH_KEY=""
 ENV TAILSCALE_ENABLE_SSH=false
+ENV TAILSCALE_HOSTNAME="LiveStreamDVR"
+
+RUN curl -fsSL https://pkgs.tailscale.com/stable/debian/bullseye.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+RUN curl -fsSL https://pkgs.tailscale.com/stable/debian/bullseye.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+
+RUN apt-get update && apt-get install tailscale && apt-get clean
 
 COPY ./docker/tailscale/setup-tailscale.sh /usr/local/bin/setup-tailscale.sh
 RUN chmod +x /usr/local/bin/setup-tailscale.sh
