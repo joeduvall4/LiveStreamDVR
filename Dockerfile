@@ -150,7 +150,7 @@ ENV TAILSCALE_HOSTNAME="LiveStreamDVR"
 RUN curl -fsSL https://pkgs.tailscale.com/stable/debian/bullseye.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg > /dev/null
 RUN curl -fsSL https://pkgs.tailscale.com/stable/debian/bullseye.tailscale-keyring.list | tee /etc/apt/sources.list.d/tailscale.list
 
-RUN apt-get update && apt-get install tailscale && apt-get clean
+RUN apt-get update && apt-get install -y tailscale && apt-get clean
 
 COPY ./docker/tailscale/setup-tailscale.sh /usr/local/bin/setup-tailscale.sh
 RUN chmod +x /usr/local/bin/setup-tailscale.sh
