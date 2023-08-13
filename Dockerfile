@@ -154,7 +154,7 @@ RUN apt-get update && apt-get install -y tailscale && apt-get clean
 
 COPY ./docker/tailscale/setup-tailscale.sh /usr/local/bin/setup-tailscale.sh
 RUN chmod +x /usr/local/bin/setup-tailscale.sh
-RUN /usr/local/bin/setup-tailscale.sh
+# RUN /usr/local/bin/setup-tailscale.sh
 
 COPY ./docker/tailscale/start-tailscale.sh /usr/local/bin/start-tailscale.sh
 RUN chmod +x /usr/local/bin/start-tailscale.sh
@@ -175,5 +175,5 @@ ENV TCD_PYTHON_ENABLE_PIPENV=1
 # USER node
 WORKDIR /usr/local/share/twitchautomator/server
 
-ENTRYPOINT [ "/usr/local/bin/start-tailscale.sh", ";", "yarn", "run", "start" ]
+ENTRYPOINT [ "/usr/local/bin/setup-tailscale.sh", ";", "yarn", "run", "start" ]
 EXPOSE 8080
